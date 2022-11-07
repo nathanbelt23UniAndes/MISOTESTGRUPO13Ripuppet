@@ -8,8 +8,9 @@
         "userInput": "",
         "passwordInput": "",
         "passwordTwoInput": "",
-        "nameInput": "Yonathan",
-        "emailInput": "nathanbelt23@gmail.com"
+        "nameInput": "",
+        "emailInput": "nathanbelt23@gmail.com",
+        "selectorButtonLogin":"button[id='ember10']"
      },
     "browsersAntes": ["chromium"],
     "browsers": ["chromium"]

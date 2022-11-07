@@ -25,6 +25,7 @@ let browsers = config.browsers; //Possible values: 'webkit', 'chromium', 'firefo
 let urlLogin = config.urlLogin
 let emailInput = config.values.emailInput;
 let passwordInput= config.values.passwordInput;
+let selectorButtonLogin= config.values.selectorButtonLogin;
 
 
 //Execution global variables
@@ -91,7 +92,7 @@ if(b=='chromium')
   let capture_path_login =  _basePath +  '/login.png'
   _page.screenshot({path:capture_path_login});
 
-  await _page.click('button[id="ember10"]');
+  await _page.click(selectorButtonLogin);
   
   await new Promise(r => setTimeout(r, 4000));
   //await _page.screenshot({path: './pagina2.png'});
