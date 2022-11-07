@@ -13,7 +13,8 @@ npm install puppeteer
 
 
 *Third Modify de nexts  fields
-![imagen](https://user-images.githubusercontent.com/111519973/200208441-b85432a1-b15d-41d8-9a44-0a758f42e39e.png)
+![imagen](https://user-images.githubusercontent.com/111519973/200210286-c11a25b3-032d-46eb-82d1-32469c4fa63d.png)
+
 
 
 Please running 
