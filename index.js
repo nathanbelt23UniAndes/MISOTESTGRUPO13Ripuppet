@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const faker = require('faker');
 const parser = require('node-html-parser');
+let miPagina=1;
 
 //Constants
 var screenshots_directory = './screenshots';
@@ -21,6 +22,10 @@ let inputValuesFlag = config.inputValues;
 let viewportHeight = config.viewportHeight || 720;
 let viewportWidth = config.viewportWidth || 1280;
 let browsers = config.browsers; //Possible values: 'webkit', 'chromium', 'firefox'
+let urlLogin = config.urlLogin
+let emailInput = config.values.emailInput;
+let passwordInput= config.values.passwordInput;
+
 
 //Execution global variables
 let statesDiscovered = 0; //Number of pages visited
@@ -45,6 +50,7 @@ console.log(ids);
 console.log(inputValues);
 
 
+
   //Main execution
   (async () => {
     if(browsers.length === 0){
@@ -52,10 +58,14 @@ console.log(inputValues);
     }
     let datetime = new Date().toISOString().replace(/:/g,".");
     for(b of browsers){
-      if(!b in ['chromium', 'webkit', 'firefox']){
+      if(!b in ['chromium'/*, 'webkit', 'firefox'*/]){
         return;
       }
       console.log(b);
+// inicio
+
+
+
       let basePath = `./results/${datetime}/${b}`
       screenshots_directory = `${basePath}/screenshots`;
       temp_directory = `${basePath}/temp` + b;
@@ -64,8 +74,36 @@ console.log(inputValues);
       const browser = await playwright[b].launch({headless: headlessFlag, viewport: {width:viewportWidth, height:viewportHeight}});
       const context = await browser.newContext();
       const page = await context.newPage();
+/// inicio
+if(b=='chromium')
+{
 
-      //Make sure errors and console events are catched
+  const _page = await context.newPage();
+    
+  //Abrir la URL a probar en la página y cargar el proyecto en una SPA
+  await _page.goto(urlLogin);
+  await new Promise(r => setTimeout(r, 4000));
+  await _page.screenshot({path: './pagina.png'})
+  await _page.type('input[name="identification"]',emailInput);
+  await _page.type('input[name="password"]', passwordInput);
+  let _basePath = `./results`
+
+  let capture_path_login =  _basePath +  '/login.png'
+  _page.screenshot({path:capture_path_login});
+
+  await _page.click('button[id="ember10"]');
+  
+  await new Promise(r => setTimeout(r, 4000));
+  //await _page.screenshot({path: './pagina2.png'});
+
+
+  console.log('Project loaded')
+  
+  
+
+
+}
+
       await addListeners(page);
       
       if (!fs.existsSync(screenshots_directory)){
@@ -216,6 +254,9 @@ function slugify(stringUrl) {
 
 //Add listeners for crash events and console error messages
 async function addListeners(page){
+
+
+
   page.on('pageerror', (err) =>{
     err_name = err.toString();
     let capture_path = screenshots_directory + err_name + '.png'
