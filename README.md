@@ -27,6 +27,5 @@ node index.js
 For example:
 
 ```
-node index.js https://github.com true
-
+node index.js 
 ```
